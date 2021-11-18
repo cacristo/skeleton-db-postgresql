@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db_postgres-database:
+    image: postgres:9.5
+    environment:
+      POSTGRES_DB: docker_db_postgres
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 13579
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/1-db.sql
+      - ./schema.sql:/docker-entrypoint-initdb.d/2-schema.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/3-data.sql
+    ports:
+      # destination:source
+      - "5432:5432"
+
+      #adminer:
+      #  image: adminer
+      #  restart: always
+      #  ports:
+  #    - 8080:8080

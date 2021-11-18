@@ -1,0 +1,41 @@
+# default config
+app:
+  name: ^project.name^
+  artifactid: ^project.artifactId^
+  version: ^project.version^
+  timestamp: ^timestamp^
+
+server:
+  port: 8080
+  servlet.context-path: /db-postgresql
+
+spring:
+  application:
+    name: db-postgresql
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        hbm2ddl.auto: none # create-drop -- first launch | test only
+    hibernate:
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: validate
+    show-sql: false
+
+  session:
+    store-type: none
+
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?currentSchema=${DATABASE_SCHEMA}&useSSL=false&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      connection-test-query: SELECT 1
+      auto-commit: false
+      data-source-j-n-d-i: jdbc/core
+      connection-timeout: 30000
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+
